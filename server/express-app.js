@@ -9,4 +9,29 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
+app.get('/vue/#', function(req, res){
+  res.sendFile(path.join(__dirname, 'views', 'indexvue.html'));
+});
+
+app.get('/vue/backward', function(req, res){
+  res.sendFile(path.join(__dirname, 'views', 'indexvue.html'));
+});
+
+app.get('/vue/exhibit*', function(req, res){
+  res.sendFile(path.join(__dirname, 'views', 'indexvue.html'));
+});
+
+app.get('/vue/tutorial*', function(req, res){
+  res.sendFile(path.join(__dirname, 'views', 'indexvue.html'));
+});
+
+
+app.get('/vue/use-cases*', function(req, res){
+  res.sendFile(path.join(__dirname, 'views', 'indexvue.html'));
+});
+
+app.get('/vue/', function(req, res){
+  res.sendFile(path.join(__dirname, 'views', 'indexvue.html'));
+});
+
 module.exports = app;
