@@ -101,127 +101,120 @@ const routes = [
     })
   },
   {
-    path: '/vue',
-    component: App,
-    children: [
-      
-	  {
-	    name: 'home',
-	    path: '',
-	    component: GeneHome,
-	    beforeEnter: (to, from, next) => {
-	      var idx = to.hash.indexOf("#access_token");
-	      if (idx == 0) {
-		let queryParams = Qs.parse(to.hash.substring(1));
-		let { access_token, expires_in, token_type, otherQueryParams } = queryParams;
-		localStorage.setItem('hub-iobio-tkn', token_type + ' ' + access_token);
-		next('/' + Qs.stringify(otherQueryParams, { addQueryPrefix: true, arrayFormat: 'brackets' }));
-	      } else {
-		var start = 0;
+	name: 'home',
+	path: '/vue',
+	component: GeneHome,
+	beforeEnter: (to, from, next) => {
+	var idx = to.hash.indexOf("#access_token");
+	if (idx == 0) {
+	let queryParams = Qs.parse(to.hash.substring(1));
+	let { access_token, expires_in, token_type, otherQueryParams } = queryParams;
+	localStorage.setItem('hub-iobio-tkn', token_type + ' ' + access_token);
+	next('/' + Qs.stringify(otherQueryParams, { addQueryPrefix: true, arrayFormat: 'brackets' }));
+	} else {
+	var start = 0;
+	if (idx == 0) {
+	start = 3;
+	} else {
+	var idx = to.hash.indexOf("#\/");
+	var start = 0;
+	if (idx == 0) {
+		start = 3;
+	} else {
+		idx = to.hash.indexOf("#");
 		if (idx == 0) {
-		  start = 3;
-		} else {
-		  var idx = to.hash.indexOf("#\/");
-		  var start = 0;
-		  if (idx == 0) {
-		    start = 3;
-		  } else {
-		    idx = to.hash.indexOf("#");
-		    if (idx == 0) {
-		      start = 2;
-		    }
-		  }
+		start = 2;
 		}
-		if (idx == 0) {
-		  let queryParams = Qs.parse(to.hash.substring(start));
-		  next('/' + Qs.stringify(queryParams, { addQueryPrefix: true, arrayFormat: 'brackets' }));
-		} else {
-		  next();
-		}
+	}
+	}
+	if (idx == 0) {
+	let queryParams = Qs.parse(to.hash.substring(start));
+	next('/' + Qs.stringify(queryParams, { addQueryPrefix: true, arrayFormat: 'brackets' }));
+	} else {
+	next();
+	}
 
-	      }
+	}
 
-	    },
-	    props: (route) => ({
-		paramGene:             route.query.gene,
-		paramGenes:            route.query.genes,
-		paramSpecies:          route.query.species,
-		paramBuild:            route.query.build,
-		paramBatchSize:        route.query.batchSize,
-		paramGeneSource:       route.query.geneSource,
-		paramMyGene2:          route.query.mygene2,
-		paramLaunchedFromClin: route.query.launchedFromClin,
-		paramMode:             route.query.mode,
-		paramTour:             route.query.tour,
-		paramFileId:           route.query.fileId,
-		paramAffectedSibs:     route.query.affectedSibs,
-		paramUnaffectedSibs:   route.query.unaffectedSibs,
-		paramRelationships:    [route.query.rel0, route.query.rel1, route.query.rel2],
-		paramSamples:          [route.query.sample0, route.query.sample1, route.query.sample2],
-		paramNames:            [route.query.name0, route.query.name1, route.query.name2],
-		paramBams:             [route.query.bam0, route.query.bam1, route.query.bam2],
-		paramBais:             [route.query.bai0, route.query.bai1, route.query.bai2],
-		paramVcfs:             [route.query.vcf0, route.query.vcf1, route.query.vcf2],
-		paramTbis:             [route.query.tbi0, route.query.tbi1, route.query.tbi2],
-		paramAffectedStatuses: [route.query.affectedStatus0, route.query.affectedStatus1, route.query.affectedStatus2],
-		paramGeneName:         route.query.geneName,
-		paramSampleId:         route.query.sample_id,
-		paramSampleUuid:       route.query.sample_uuid,
-		paramProjectId:        route.query.project_id,
-		paramIsPedigree:       route.query.is_pedigree,
-		paramSource:           route.query.source
-	    })
-	  },
-	  {
-	    name: 'home-backward-compat1',
-	    path: '#',
-	    redirect: '/vue'
-	  },
-	  {
-	    name: 'home-backward-compat2',
-	    path: '#/',
-	    redirect: '/vue'
-	  },
-	  {
-	    name: 'home-hub',
-	    path: 'access_token*',
-	    redirect: '/vue'
-	  },
-	  {
-	    name: 'tutorial',
-	    path: 'tutorial',
-	    component: Tutorial
-	  },
-	  {
-	    name: 'use-cases',
-	    path: 'use-cases',
-	    component: UseCases,
-	    props: (route) => ({
-		paramTopic:             route.query.topic
-	    })
-	  },
-	  {
-	    name: 'exhibit',
-	    path: 'exhibit',
-	    component: Exhibit
-	  },
-	  {
-	    name: 'exhibit-cases',
-	    path: 'exhibit-cases',
-	    component: ExhibitCases
-	  },
-	  {
-	    name: 'exhibit-case-complete',
-	    path: 'exhibit-case-complete',
-	    component: ExhibitCaseComplete
-	  },
-	  {
-	    name: 'exhibit-cases-complete',
-	    path: 'exhibit-cases-complete',
-	    component: ExhibitCasesComplete
-	  }
-    ]
-  }
+	},
+	props: (route) => ({
+	paramGene:             route.query.gene,
+	paramGenes:            route.query.genes,
+	paramSpecies:          route.query.species,
+	paramBuild:            route.query.build,
+	paramBatchSize:        route.query.batchSize,
+	paramGeneSource:       route.query.geneSource,
+	paramMyGene2:          route.query.mygene2,
+	paramLaunchedFromClin: route.query.launchedFromClin,
+	paramMode:             route.query.mode,
+	paramTour:             route.query.tour,
+	paramFileId:           route.query.fileId,
+	paramAffectedSibs:     route.query.affectedSibs,
+	paramUnaffectedSibs:   route.query.unaffectedSibs,
+	paramRelationships:    [route.query.rel0, route.query.rel1, route.query.rel2],
+	paramSamples:          [route.query.sample0, route.query.sample1, route.query.sample2],
+	paramNames:            [route.query.name0, route.query.name1, route.query.name2],
+	paramBams:             [route.query.bam0, route.query.bam1, route.query.bam2],
+	paramBais:             [route.query.bai0, route.query.bai1, route.query.bai2],
+	paramVcfs:             [route.query.vcf0, route.query.vcf1, route.query.vcf2],
+	paramTbis:             [route.query.tbi0, route.query.tbi1, route.query.tbi2],
+	paramAffectedStatuses: [route.query.affectedStatus0, route.query.affectedStatus1, route.query.affectedStatus2],
+	paramGeneName:         route.query.geneName,
+	paramSampleId:         route.query.sample_id,
+	paramSampleUuid:       route.query.sample_uuid,
+	paramProjectId:        route.query.project_id,
+	paramIsPedigree:       route.query.is_pedigree,
+	paramSource:           route.query.source
+	})
+},
+{
+	name: 'home-backward-compat1',
+	path: '/vue/#',
+	redirect: '/vue'
+},
+{
+	name: 'home-backward-compat2',
+	path: '/vue/#/',
+	redirect: '/vue'
+},
+{
+	name: 'home-hub',
+	path: '/vue/access_token*',
+	redirect: '/vue'
+},
+{
+	name: 'tutorial',
+	path: '/vue/tutorial',
+	component: Tutorial
+},
+{
+	name: 'use-cases',
+	path: '/vue/use-cases',
+	component: UseCases,
+	props: (route) => ({
+	paramTopic:             route.query.topic
+	})
+},
+{
+	name: 'exhibit',
+	path: '/vue/exhibit',
+	component: Exhibit
+},
+{
+	name: 'exhibit-cases',
+	path: '/vue/exhibit-cases',
+	component: ExhibitCases
+},
+{
+	name: 'exhibit-case-complete',
+	path: '/vue/exhibit-case-complete',
+	component: ExhibitCaseComplete
+},
+{
+	name: 'exhibit-cases-complete',
+	path: '/vue/exhibit-cases-complete',
+	component: ExhibitCasesComplete
+}
 ]
 
 const router = new VueRouter({
